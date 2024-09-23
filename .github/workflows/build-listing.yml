@@ -1,0 +1,41 @@
+name: Update VPM Workflow
+
+on: 
+  workflow_dispatch:
+  workflow_run:
+    workflows: [Build And Release]
+    types:
+      - completed
+  release:
+    types: [published, created, edited, unpublished, deleted, released]
+
+# Define main variables
+env:
+  REPO_OWNER: "SweetForest"                   # The owner of the repository
+  REPO_NAME: "VPM"                             # The name of the repository to trigger
+  REPO_BRANCH: "main"                          # The branch to use for triggering the workflow
+  WORKFLOW_FILENAME: "build-listing.yml"      # The filename of the workflow to trigger
+  REPO_ACCESS_TOKEN: ${{ secrets.REPO_ACCESS_TOKEN }}  # Token for authenticating GitHub API requests
+  
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    if: github.event.release.draft == false
+    steps:
+      - name: Check REPO_ACCESS_TOKEN
+        run: |
+          if [ -z "${{ secrets.REPO_ACCESS_TOKEN }}" ]; then
+            echo "REPO_ACCESS_TOKEN is not set. Exiting workflow."
+            exit 0
+          fi
+      - name: Trigger VPM Workflow
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          script: |
+            await github.rest.actions.createWorkflowDispatch({
+              owner: '${{ env.REPO_OWNER }}',          // Specify the repository owner
+              repo: '${{ env.REPO_NAME }}',            // Specify the repository name
+              workflow_id: '${{ env.WORKFLOW_FILENAME }}', // Specify the workflow filename
+              ref: '${{ env.REPO_BRANCH }}'             // Use the specified branch
+            });
