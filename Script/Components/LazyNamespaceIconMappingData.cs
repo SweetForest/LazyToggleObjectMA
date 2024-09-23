@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using VRC.SDKBase;
-using UnityEditor;
 
 namespace SweetForest.LazyToggleObjectMA.Components
 {
@@ -42,8 +41,8 @@ namespace SweetForest.LazyToggleObjectMA.Components
         // Retrieves the texture associated with the given namespace path using the dictionary
         public Texture2D GetTextureViewer(string namespacePath)
         {
-            return namespaceTextureDictionary.ContainsKey(namespacePath)?namespaceTextureDictionary[namespacePath]:null;
-           
+            return namespaceTextureDictionary.ContainsKey(namespacePath) ? namespaceTextureDictionary[namespacePath] : null;
+
         }
         public Texture2D GetTexture(string namespacePath)
         {
@@ -80,8 +79,8 @@ namespace SweetForest.LazyToggleObjectMA.Components
             SyncDictToMapper();
 
             // Mark the object as dirty to save changes in the Editor
-            EditorUtility.SetDirty(this);
-            
+            //EditorUtility.SetDirty(this);
+
         }
 
 
@@ -92,18 +91,20 @@ namespace SweetForest.LazyToggleObjectMA.Components
             {
                 namespaceTextureDictionary[item.namespacePath] = item.texture;
             }
-            
+
         }
-        public Dictionary<string, Texture2D> GetCachedMappingViewer() {
+        public Dictionary<string, Texture2D> GetCachedMappingViewer()
+        {
             return namespaceTextureDictionary;
         }
-         public void SyncDictToMapper() {
-        mappings.Clear();
+        public void SyncDictToMapper()
+        {
+            mappings.Clear();
             foreach (var kvp in namespaceTextureDictionary)
             {
                 mappings.Add(new NamespaceTextureMapping { namespacePath = kvp.Key, texture = kvp.Value });
             }
+        }
     }
-    }
-   
+
 }

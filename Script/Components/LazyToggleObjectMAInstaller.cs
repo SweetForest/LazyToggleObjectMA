@@ -5,16 +5,16 @@ using VRC.SDKBase;
 
 namespace SweetForest.LazyToggleObjectMA.Components
 {
-    
 
 
-[ExecuteInEditMode]
-[AddComponentMenu("Lazy Toggle Object MA")]
-[DisallowMultipleComponent]
-public class LazyToggleObjectMAInstaller : MonoBehaviour, IEditorOnly
-{
-    
-    //[Header("Namespace Settings")]
+
+    [ExecuteInEditMode]
+    [AddComponentMenu("Lazy Toggle Object MA")]
+    [DisallowMultipleComponent]
+    public class LazyToggleObjectMAInstaller : MonoBehaviour, IEditorOnly
+    {
+
+        //[Header("Namespace Settings")]
         [Tooltip("Grouping menu using the specified namespace")]
         public string NamespaceGroup;
 
@@ -22,7 +22,7 @@ public class LazyToggleObjectMAInstaller : MonoBehaviour, IEditorOnly
         public string CustomNameButton;
 
         //[Space(5)]
-       // [Header("Parameter Settings")]
+        // [Header("Parameter Settings")]
         [Tooltip("Default value of the parameter (true/false)")]
         public bool DefaultValue = false;
 
@@ -36,19 +36,21 @@ public class LazyToggleObjectMAInstaller : MonoBehaviour, IEditorOnly
         public bool LocalOnly = false;
 
         //[Space(5)]
-       // [Header("Icon Settings")]
+        // [Header("Icon Settings")]
         [Tooltip("Icon for the toggle button")]
         public Texture2D IconButton;
 
 
 
-        
-        public string getParameter() {
-            return "lazy_toggle_object_ma:"+NamespaceGroup+":"+gameObject.GetInstanceID();
+
+        public string getParameter()
+        {
+            return "lazy_toggle_object_ma:" + NamespaceGroup + ":" + gameObject.GetInstanceID();
         }
-        public string getNameButton() {
+        public string getNameButton()
+        {
             return CustomNameButton != "" ? CustomNameButton : gameObject.name;
         }
-}
+    }
 
 }

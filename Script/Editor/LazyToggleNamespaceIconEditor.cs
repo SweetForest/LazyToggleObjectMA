@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace SweetForest.LazyToggleObjectMA.Editor
 {
-public class LazyToggleNamespaceIconEditor
+    public class LazyToggleNamespaceIconEditor
     {
         public static GameObject rootGameObject;
 
@@ -27,7 +27,7 @@ public class LazyToggleNamespaceIconEditor
             }
         }
 
-         // New menu item in the top menu bar
+        // New menu item in the top menu bar
         [MenuItem("Tools/Lazy Toggle Object Menu/Namespace Icon Group Editor")]
         private static void OpenNamespaceIconGroupEditor()
         {
