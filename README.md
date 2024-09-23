@@ -32,6 +32,8 @@ Once you have set everything up, you can trigger the workflow from the **Actions
 
 ## 🛠️ Updating the VPM Workflow
 
+If you haven't created your VPM yet, you can generate it from the following template: [VRChat Community Template Package Listing](https://github.com/vrchat-community/template-package-listing).
+
 To set up the workflow for updating the VPM:
 
 1. **Generate Personal Access Token**:
