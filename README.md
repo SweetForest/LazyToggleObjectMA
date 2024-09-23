@@ -29,6 +29,28 @@ The release process is managed through the `release.yml` file in the `/actions/w
 Once you have set everything up, you can trigger the workflow from the **Actions** tab in your GitHub repository. Select the **release.yml** workflow, click the "Run workflow" button, and choose your desired release option (Create/Update/Test) from the dropdown. 🎉
 
 ---
+
+## 🛠️ Updating the VPM Workflow
+
+To set up the workflow for updating the VPM:
+
+1. **Generate Personal Access Token**:
+   - Go to [GitHub Personal Access Tokens](https://github.com/settings/tokens).
+   - Click on **"Generate new token"**.
+   - Select the necessary scopes (e.g., `repo`, `workflow`).
+   - Copy the token after generating it.
+
+2. **Add the Token as a Secret**:
+   - In your repository, go to `Settings > Secrets and variables > Actions`.
+   - Click **"New repository secret"**.
+   - Name it (e.g., `REPO_ACCESS_TOKEN`) and paste the token.
+   - Click **"Add secret"**.
+
+3. **Configure Your Workflow**:
+   - Update your workflow YAML file located at `.github/workflows/build-listing.yml` to reference the secret and set up the necessary steps for triggering the workflow.
+---
+
+
 ## 💖 Support Me
 
 Visit my booth for supporting me [SweetForest's Booth](https://sweetforest.booth.pm)
