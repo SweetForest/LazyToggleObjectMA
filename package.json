@@ -1,0 +1,14 @@
+{
+  "name": "sweetforest.example.lazyvpmpackagetemplate",
+  "version": "1.0.0",
+  "displayName": "Lazy VPM Package Template Dont Forget To Replace or Edit this file",
+  "description": "Edit package.json to fit your needs and preferences.",
+  "unity": "2022.3",
+  "author": {
+    "name": "Sweet Forest",
+    "url": "https://sweetforest.github.io/VPM/"
+  },
+  "vpmDependencies": {
+    "com.vrchat.avatars": "^3.4.0"
+  }
+}
