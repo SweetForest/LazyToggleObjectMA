@@ -1,0 +1,15 @@
+{
+  "name": "sweetforest.lazytoggleobjectma",
+  "version": "1.0.0",
+  "displayName": "Lazy Toggle Object MA",
+  "description": "Lazy to create toggle object menu.",
+  "unity": "2022.3",
+  "author": {
+    "name": "Sweet Forest",
+    "url" : "https://sweetforest.github.io/VPM/"
+  },
+  "vpmDependencies": {
+    "nadena.dev.ndmf": "^1.4.0",
+    "com.vrchat.avatars": "^3.4.0"
+  }
+}
