@@ -155,14 +155,17 @@ namespace SweetForest.LazyToggleObjectMA.Editor
         private void addItemMenu(GameObject gameObject, Components.LazyToggleObjectMAInstaller lazyToggleObjectMAInstaller)
         {
             // parameter
-            var parameterComponent = gameObject.AddComponent<ModularAvatarParameters>();
-            var parameterConfig = new ParameterConfig();
-            parameterConfig.defaultValue = lazyToggleObjectMAInstaller.DefaultValue ? 1 : 0;
-            parameterConfig.saved = lazyToggleObjectMAInstaller.SavedValue;
-            parameterConfig.localOnly = lazyToggleObjectMAInstaller.LocalOnly;
-            parameterConfig.syncType = lazyToggleObjectMAInstaller.Synced ? ParameterSyncType.Bool : ParameterSyncType.NotSynced;
-            parameterConfig.nameOrPrefix = lazyToggleObjectMAInstaller.getParameter();
-            parameterComponent.parameters.Add(parameterConfig);
+            if(lazyToggleObjectMAInstaller.IsNeedToGenerateParameter()) {
+                var parameterComponent = gameObject.AddComponent<ModularAvatarParameters>();
+                var parameterConfig = new ParameterConfig();
+                parameterConfig.defaultValue = lazyToggleObjectMAInstaller.DefaultValue ? 1 : 0;
+                parameterConfig.saved = lazyToggleObjectMAInstaller.SavedValue;
+                parameterConfig.localOnly = lazyToggleObjectMAInstaller.LocalOnly;
+                parameterConfig.syncType = lazyToggleObjectMAInstaller.Synced ? ParameterSyncType.Bool : ParameterSyncType.NotSynced;
+                parameterConfig.nameOrPrefix = lazyToggleObjectMAInstaller.GetParameter();
+                parameterComponent.parameters.Add(parameterConfig);
+            }
+            
 
             var itemComponent = gameObject.AddComponent<ModularAvatarMenuItem>();
             itemComponent.name = lazyToggleObjectMAInstaller.getNameButton();
@@ -174,11 +177,12 @@ namespace SweetForest.LazyToggleObjectMA.Editor
 
             itemComponent.Control.type = VirtualControl.ControlType.Toggle;
             var vControlParameter = new VirtualControl.Parameter();
-            vControlParameter.name = lazyToggleObjectMAInstaller.getParameter();
+        
+            vControlParameter.name = lazyToggleObjectMAInstaller.GetParameter();
 
             itemComponent.Control.parameter = vControlParameter;
 
-            Debug.Log("LazyToggleObjectMA: added Item menu " + lazyToggleObjectMAInstaller.getParameter());
+            Debug.Log("LazyToggleObjectMA: added Item menu " + lazyToggleObjectMAInstaller.GetParameter());
 
         }
 
@@ -192,8 +196,10 @@ namespace SweetForest.LazyToggleObjectMA.Editor
 
             foreach (var item in list)
             {
-
-                AddToggleAnimationAnimator(animatorController, item);
+                if(item.IsNeedToGenerateAnimation()) {
+                    AddToggleAnimationAnimator(animatorController, item);
+                }
+                
 
             }
         }
@@ -201,15 +207,15 @@ namespace SweetForest.LazyToggleObjectMA.Editor
         private void AddToggleAnimationAnimator(AnimatorController animatorController, Components.LazyToggleObjectMAInstaller lazyToggleObjectMAInstaller)
         {
 
-            animatorController.AddParameter(lazyToggleObjectMAInstaller.getParameter(), AnimatorControllerParameterType.Bool);
+            animatorController.AddParameter(lazyToggleObjectMAInstaller.GetParameter(), AnimatorControllerParameterType.Bool);
             var anim_layer = new AnimatorControllerLayer();
-            anim_layer.name = lazyToggleObjectMAInstaller.getParameter();
+            anim_layer.name = lazyToggleObjectMAInstaller.GetParameter();
             anim_layer.defaultWeight = 1;
             anim_layer.stateMachine = new AnimatorStateMachine();
-            anim_layer.stateMachine.name = lazyToggleObjectMAInstaller.getParameter(); ;
+            anim_layer.stateMachine.name = lazyToggleObjectMAInstaller.GetParameter(); ;
             animatorController.AddLayer(anim_layer);
             // create state to
-            AnimatorState toggleONState = anim_layer.stateMachine.AddState("ON = Object HIDE"); // why false means visible ?
+            AnimatorState toggleONState = anim_layer.stateMachine.AddState("HIDDEN "+lazyToggleObjectMAInstaller.getNameButton()); // why false means visible ?
                                                                                                 // in my-case i used to accidentally naked.
                                                                                                 // this better to avoid default value
                                                                                                 // Create a new AnimationClip
@@ -223,7 +229,7 @@ namespace SweetForest.LazyToggleObjectMA.Editor
             animationClipON.SetCurve(RuntimeUtil.AvatarRootPath(lazyToggleObjectMAInstaller.gameObject), typeof(GameObject), "m_IsActive", curve);
             toggleONState.motion = animationClipON;
 
-            AnimatorState toggleOFFState = anim_layer.stateMachine.AddState("OFF = Object SHOW");
+            AnimatorState toggleOFFState = anim_layer.stateMachine.AddState("VISIBLE "+lazyToggleObjectMAInstaller.getNameButton());
             // Create a new AnimationClip
             AnimationClip animationClipOFF = new AnimationClip();
 
@@ -236,12 +242,12 @@ namespace SweetForest.LazyToggleObjectMA.Editor
             toggleOFFState.motion = animationClipOFF;
 
             AnimatorStateTransition transitionOff = toggleONState.AddTransition(toggleOFFState);
-            transitionOff.AddCondition(AnimatorConditionMode.IfNot, 0, lazyToggleObjectMAInstaller.getParameter());
+            transitionOff.AddCondition(AnimatorConditionMode.IfNot, 0, lazyToggleObjectMAInstaller.GetParameter());
             transitionOff.hasExitTime = false;
             transitionOff.exitTime = 0;
             transitionOff.duration = 0;
             AnimatorStateTransition transitionOn = toggleOFFState.AddTransition(toggleONState);
-            transitionOn.AddCondition(AnimatorConditionMode.If, 0, lazyToggleObjectMAInstaller.getParameter());
+            transitionOn.AddCondition(AnimatorConditionMode.If, 0, lazyToggleObjectMAInstaller.GetParameter());
             transitionOn.hasExitTime = false;
             transitionOn.exitTime = 0;
             transitionOn.duration = 0;

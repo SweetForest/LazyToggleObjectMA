@@ -10,7 +10,7 @@ namespace SweetForest.LazyToggleObjectMA.Components
 
     [ExecuteInEditMode]
     [AddComponentMenu("Lazy Toggle Object MA")]
-    [DisallowMultipleComponent]
+    //[DisallowMultipleComponent]
     public class LazyToggleObjectMAInstaller : MonoBehaviour, IEditorOnly
     {
 
@@ -20,6 +20,10 @@ namespace SweetForest.LazyToggleObjectMA.Components
 
         [Tooltip("Custom name for the toggle button")]
         public string CustomNameButton;
+
+        public bool UseExistParameter;
+        [Tooltip("Use Exist Parameter")]
+        public string ExistBooleanParameter;
 
         //[Space(5)]
         // [Header("Parameter Settings")]
@@ -40,12 +44,47 @@ namespace SweetForest.LazyToggleObjectMA.Components
         [Tooltip("Icon for the toggle button")]
         public Texture2D IconButton;
 
+    
+    
+        private void Start() {
+            if(!CanToggleToGenerateAnimation()) {
+                UseExistParameter = true;
+            }
+        }
+       
+    
+    
+        public bool CanToggleToGenerateAnimation() {
+            if(GetComponents<LazyToggleObjectMAInstaller>().Length == 0) {
+               return true;
+            } else {
 
+                var components = GetComponents<LazyToggleObjectMAInstaller>();
 
-
-        public string getParameter()
+                foreach (var item in components)
+                {
+                    if(item == this) continue;
+                 if(!item.UseExistParameter) {
+                   return false;
+                 } 
+                }
+               return true;
+            }
+        }
+        public string GetParameter()
         {
-            return "lazy_toggle_object_ma:" + NamespaceGroup + ":" + gameObject.GetInstanceID();
+            // already exist parameter
+            if(UseExistParameter && ExistBooleanParameter != null || ExistBooleanParameter != "") return ExistBooleanParameter;
+
+            return "lazy_toggle_object_ma/" + NamespaceGroup + "/" + gameObject.GetInstanceID();
+        }
+        public bool IsNeedToGenerateParameter() {
+            if(UseExistParameter && ExistBooleanParameter != null || ExistBooleanParameter != "") return false;
+            return true;
+        }
+        public bool IsNeedToGenerateAnimation() {
+            if(UseExistParameter && ExistBooleanParameter != null || ExistBooleanParameter != "") return false;
+            return true;
         }
         public string getNameButton()
         {
