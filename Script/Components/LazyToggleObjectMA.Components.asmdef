@@ -1,13 +1,15 @@
 {
     "name": "LazyToggleObjectMA.Components",
     "rootNamespace": "SweetForest.LazyToggleObjectMA.Components",
-    "references": [],
+    "references": [
+        "GUID:fd73144be4fd05a418bcc46a33b0c419"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],
-    "autoReferenced": false,
+    "autoReferenced": true,
     "defineConstraints": [],
     "versionDefines": [],
     "noEngineReferences": false

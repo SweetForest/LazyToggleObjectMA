@@ -1,4 +1,5 @@
 
+using SweetForest.LazyToggleObjectMA.Utilities.LazyHierachies;
 using UnityEngine;
 using VRC.SDKBase;
 
@@ -71,12 +72,15 @@ namespace SweetForest.LazyToggleObjectMA.Components
                return true;
             }
         }
-        public string GetParameter()
+
+     
+        public string GetParameter(LazyHierarchyNode<LazyToggleObjectMAInstaller> node)
         {
             // already exist parameter
             if(UseExistParameter && ExistBooleanParameter != null || ExistBooleanParameter != "") return ExistBooleanParameter;
-
-            return "lazy_toggle_object_ma/" + NamespaceGroup + "/" + gameObject.GetInstanceID();
+           
+            
+            return "lazy_toggle_object_ma/" + NamespaceGroup + "/" + gameObject.name+":"+node.GetIndexOfValue(this);
         }
         public bool IsNeedToGenerateParameter() {
             if(UseExistParameter && ExistBooleanParameter != null || ExistBooleanParameter != "") return false;

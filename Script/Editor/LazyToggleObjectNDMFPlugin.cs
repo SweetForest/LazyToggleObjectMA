@@ -93,10 +93,12 @@ namespace SweetForest.LazyToggleObjectMA.Editor
             Debug.Log("LazyToggleObjectMA: Top Namespace = " + parentNamespace.Count);
             var namespaceMapData = ctx.AvatarRootObject.GetComponent<Components.LazyNamespaceIconMappingData>();
 
-            foreach (var item in namespaceMapData.GetCachedMappingViewer())
-            {
-                Debug.Log("LazyToggleObjectMA: what in side mapping`" + item.Key + " t: " + (item.Value == null ? "null" : item.Value.name));
-            }
+            
+
+            //foreach (var item in namespaceMapData.GetCachedMappingViewer())
+            //{
+               // Debug.Log("LazyToggleObjectMA: what in side mapping`" + item.Key + " t: " + (item.Value == null ? "null" : item.Value.name));
+            //}
 
 
             ApplyRecursiveParentMenu(namespaceMapData, installerMenu, lazyHierarchy.Root);
@@ -111,7 +113,7 @@ namespace SweetForest.LazyToggleObjectMA.Editor
 
             foreach (var item in node.Children)
             {
-                Debug.Log("LazyToggleObjectMA: adding sub menu " + item.Key + " in " + node.Namespace);
+                //Debug.Log("LazyToggleObjectMA: adding sub menu " + item.Key + " in " + node.Namespace);
                 GameObject itemMenu = new GameObject("sub menu");
                 itemMenu.transform.parent = parentGameObject.transform;
                 addSubItemMenu(namespaceMapData, itemMenu, item.Value);
@@ -123,10 +125,10 @@ namespace SweetForest.LazyToggleObjectMA.Editor
             // add value
             foreach (var lazyToggleObjectMAInstaller in node.Values)
             {
-                Debug.Log("LazyToggleObjectMA: added pure item menu" + lazyToggleObjectMAInstaller.getNameButton() + " in " + node.Namespace);
+               // Debug.Log("LazyToggleObjectMA: added pure item menu" + lazyToggleObjectMAInstaller.getNameButton() + " in " + node.Namespace);
                 GameObject itemMenu = new GameObject("item menu");
                 itemMenu.transform.parent = parentGameObject.transform;
-                addItemMenu(itemMenu, lazyToggleObjectMAInstaller);
+                addItemMenu(itemMenu,node, lazyToggleObjectMAInstaller);
             }
         }
         private void addSubItemMenu(Components.LazyNamespaceIconMappingData namespaceMapData, GameObject gameObject, LazyHierarchyNode<Components.LazyToggleObjectMAInstaller> node)
@@ -137,22 +139,23 @@ namespace SweetForest.LazyToggleObjectMA.Editor
             if (namespaceMapData != null)
             {
                 var t = namespaceMapData.GetTextureViewer(node.NamespacePath);
-                Debug.Log("LazyToggleObjectMA: checking path: " + node.NamespacePath + " Name: " + node.Namespace);
+               // Debug.Log("LazyToggleObjectMA: checking path: " + node.NamespacePath + " Name: " + node.Namespace);
 
                 if (t != null)
                 {
                     submenu.Control.icon = t;
-                    Debug.Log("LazyToggleObjectMA: overide icon on `" + node.Namespace + "` sub menu");
+                  //  Debug.Log("LazyToggleObjectMA: overide icon on `" + node.Namespace + "` sub menu");
+                    
                 }
 
             }
             submenu.Control.type = VirtualControl.ControlType.SubMenu;
             submenu.MenuSource = SubmenuSource.Children;
-            Debug.Log("LazyToggleObjectMA: added sub menu " + node.Namespace);
+        //    Debug.Log("LazyToggleObjectMA: added sub menu " + node.Namespace);
             // check sub menu icon
         }
 
-        private void addItemMenu(GameObject gameObject, Components.LazyToggleObjectMAInstaller lazyToggleObjectMAInstaller)
+        private void addItemMenu(GameObject gameObject, LazyHierarchyNode<Components.LazyToggleObjectMAInstaller> node, Components.LazyToggleObjectMAInstaller lazyToggleObjectMAInstaller)
         {
             // parameter
             if(lazyToggleObjectMAInstaller.IsNeedToGenerateParameter()) {
@@ -162,7 +165,7 @@ namespace SweetForest.LazyToggleObjectMA.Editor
                 parameterConfig.saved = lazyToggleObjectMAInstaller.SavedValue;
                 parameterConfig.localOnly = lazyToggleObjectMAInstaller.LocalOnly;
                 parameterConfig.syncType = lazyToggleObjectMAInstaller.Synced ? ParameterSyncType.Bool : ParameterSyncType.NotSynced;
-                parameterConfig.nameOrPrefix = lazyToggleObjectMAInstaller.GetParameter();
+                parameterConfig.nameOrPrefix = lazyToggleObjectMAInstaller.GetParameter(node);
                 parameterComponent.parameters.Add(parameterConfig);
             }
             
@@ -177,12 +180,11 @@ namespace SweetForest.LazyToggleObjectMA.Editor
 
             itemComponent.Control.type = VirtualControl.ControlType.Toggle;
             var vControlParameter = new VirtualControl.Parameter();
-        
-            vControlParameter.name = lazyToggleObjectMAInstaller.GetParameter();
+            vControlParameter.name = lazyToggleObjectMAInstaller.GetParameter(node);
 
             itemComponent.Control.parameter = vControlParameter;
 
-            Debug.Log("LazyToggleObjectMA: added Item menu " + lazyToggleObjectMAInstaller.GetParameter());
+          //  Debug.Log("LazyToggleObjectMA: added Item menu " + lazyToggleObjectMAInstaller.GetParameter(node));
 
         }
 
@@ -194,25 +196,28 @@ namespace SweetForest.LazyToggleObjectMA.Editor
             var list = lazyHierarchy.GetAllValues();
 
 
+            
             foreach (var item in list)
-            {
-                if(item.IsNeedToGenerateAnimation()) {
-                    AddToggleAnimationAnimator(animatorController, item);
+            {          
+                var k = item.Item1;
+                var v = item.Item2;
+                if(v.IsNeedToGenerateAnimation()) {
+                    AddToggleAnimationAnimator(animatorController,k, v);
                 }
                 
 
             }
         }
 
-        private void AddToggleAnimationAnimator(AnimatorController animatorController, Components.LazyToggleObjectMAInstaller lazyToggleObjectMAInstaller)
+        private void AddToggleAnimationAnimator(AnimatorController animatorController, LazyHierarchyNode<Components.LazyToggleObjectMAInstaller> node, Components.LazyToggleObjectMAInstaller lazyToggleObjectMAInstaller)
         {
-
-            animatorController.AddParameter(lazyToggleObjectMAInstaller.GetParameter(), AnimatorControllerParameterType.Bool);
+            
+            animatorController.AddParameter(lazyToggleObjectMAInstaller.GetParameter(node), AnimatorControllerParameterType.Bool);
             var anim_layer = new AnimatorControllerLayer();
-            anim_layer.name = lazyToggleObjectMAInstaller.GetParameter();
+            anim_layer.name = lazyToggleObjectMAInstaller.GetParameter(node);
             anim_layer.defaultWeight = 1;
             anim_layer.stateMachine = new AnimatorStateMachine();
-            anim_layer.stateMachine.name = lazyToggleObjectMAInstaller.GetParameter(); ;
+            anim_layer.stateMachine.name = lazyToggleObjectMAInstaller.GetParameter(node); ;
             animatorController.AddLayer(anim_layer);
             // create state to
             AnimatorState toggleONState = anim_layer.stateMachine.AddState("HIDDEN "+lazyToggleObjectMAInstaller.getNameButton()); // why false means visible ?
@@ -242,12 +247,12 @@ namespace SweetForest.LazyToggleObjectMA.Editor
             toggleOFFState.motion = animationClipOFF;
 
             AnimatorStateTransition transitionOff = toggleONState.AddTransition(toggleOFFState);
-            transitionOff.AddCondition(AnimatorConditionMode.IfNot, 0, lazyToggleObjectMAInstaller.GetParameter());
+            transitionOff.AddCondition(AnimatorConditionMode.IfNot, 0, lazyToggleObjectMAInstaller.GetParameter(node));
             transitionOff.hasExitTime = false;
             transitionOff.exitTime = 0;
             transitionOff.duration = 0;
             AnimatorStateTransition transitionOn = toggleOFFState.AddTransition(toggleONState);
-            transitionOn.AddCondition(AnimatorConditionMode.If, 0, lazyToggleObjectMAInstaller.GetParameter());
+            transitionOn.AddCondition(AnimatorConditionMode.If, 0, lazyToggleObjectMAInstaller.GetParameter(node));
             transitionOn.hasExitTime = false;
             transitionOn.exitTime = 0;
             transitionOn.duration = 0;

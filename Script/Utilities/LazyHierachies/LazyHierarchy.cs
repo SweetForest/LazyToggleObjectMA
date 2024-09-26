@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,7 +18,7 @@ namespace SweetForest.LazyToggleObjectMA.Utilities.LazyHierachies
             cachedNodes[""] = Root; // Cache the root
         }
 
-
+       
         // Method to add a value to the hierarchy
         public void Add(string path, T value)
         {
@@ -134,19 +135,19 @@ namespace SweetForest.LazyToggleObjectMA.Utilities.LazyHierachies
             return list;
         }
 
-        public List<T> GetAllValues()
+        public List<Tuple<LazyHierarchyNode<T>, T>> GetAllValues()
         {
-            List<T> values = new List<T>();
+            List<Tuple<LazyHierarchyNode<T>, T>> values = new List<Tuple<LazyHierarchyNode<T>, T>>();
             GetAllValuesRecursively(Root, values);
             return values;
         }
 
-        private void GetAllValuesRecursively(LazyHierarchyNode<T> node, List<T> values)
+        private void GetAllValuesRecursively(LazyHierarchyNode<T> node, List<Tuple<LazyHierarchyNode<T>, T>> values)
         {
-
+            // Add each value along with the current node
             foreach (var item in node.Values)
             {
-                values.Add(item);
+                values.Add(new Tuple<LazyHierarchyNode<T>, T>(node, item));
             }
 
             // Recursively call for each child node

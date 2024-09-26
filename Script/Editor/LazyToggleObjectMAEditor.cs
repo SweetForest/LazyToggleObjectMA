@@ -71,7 +71,7 @@ namespace SweetForest.LazyToggleObjectMA.Editor
 
 
             // open window
-            Debug.Log("Open Namespace Icon Group Editor");
+          //  Debug.Log("Open Namespace Icon Group Editor");
             // Get the GameObject from the target component
             Components.LazyToggleObjectMAInstaller script = (Components.LazyToggleObjectMAInstaller)target; // Cast target to the correct type
             GameObject gameObjectOfScript = script.gameObject; // Get the GameObject of the script

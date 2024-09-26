@@ -32,7 +32,7 @@ namespace SweetForest.LazyToggleObjectMA.Editor
         private static void OpenNamespaceIconGroupEditor()
         {
             // Logic for opening your editor window can go here
-            Debug.Log("Opening Namespace Icon Group Editor");
+           // Debug.Log("Opening Namespace Icon Group Editor");
             // You can create a new window here if needed
             LazyToggleNamespaceWindow.ShowWindow(null); // Example if you want to open with no GameObject
         }
