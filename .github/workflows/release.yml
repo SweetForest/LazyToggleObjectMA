@@ -40,13 +40,13 @@ jobs:
       - name: Create ZIP file
         run: |
           zip_path="./${{ env.name }}-${{ env.version }}.zip"
-          zip -r "$zip_path" . -x '.git/*' '.github/*' '*.md' '*.md.meta' '*.bak'
+          zip -r "$zip_path" . -x '.git/*' '.git_resources/*' '.github/*' '*.md' '*.md.meta' '*.bak'
           echo "zip_path=$zip_path" >> $GITHUB_ENV
 
       - name: Copy files to Packages/${{ env.name }}
         run: |
           mkdir -p "Packages/${{ env.name }}"
-          rsync -av --exclude='.git' --exclude='.github' --exclude='*.md' --exclude='*.md.meta' --exclude='${{ env.name }}-${{ env.version }}.zip' . "Packages/${{ env.name }}/"
+          rsync -av --exclude='.git' --exclude='.github' --exclude='.git_resources' --exclude='*.md' --exclude='*.md.meta' --exclude='${{ env.name }}-${{ env.version }}.zip' . "Packages/${{ env.name }}/"
 
       - run: find "Packages/${{ env.name }}/" -name \*.meta >> metaList
     
