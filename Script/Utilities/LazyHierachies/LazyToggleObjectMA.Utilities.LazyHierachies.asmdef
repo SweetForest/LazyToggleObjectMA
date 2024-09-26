@@ -1,0 +1,14 @@
+{
+    "name": "LazyToggleObjectMA.Utilities.LazyHierachies",
+    "rootNamespace": "SweetForest.LazyToggleObjectMA.Utilities.LazyHierachies",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,29 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <ui:Label tabindex="-1" text="Lazy Toggle Object MA" parse-escape-sequences="true" display-tooltip-when-elided="true" style="font-size: 30px; -unity-text-align: middle-center; color: rgb(0, 128, 255); -unity-text-outline-width: 2px; -unity-background-scale-mode: scale-and-crop; white-space: nowrap; text-overflow: ellipsis; background-image: url(&quot;project://database/Packages/sweetforest.lazytoggleobjectma/sources/icon.png?fileID=2800000&amp;guid=0b00a8bdd602b12439f23e4b66432a72&amp;type=3#icon&quot;); height: 89px; -unity-font-style: bold; -unity-text-outline-color: rgba(0, 48, 152, 0);" />
+    <ui:VisualElement name="VisualElement" style="flex-grow: 1; translate: 0 10px;">
+        <uie:PropertyField binding-path="NamespaceGroup" name="Namespace" label="&lt;color=#60B0FF&gt;&lt;b&gt;&lt;size=20&gt;Namespace&lt;/color&gt;" />
+        <uie:PropertyField binding-path="CustomNameButton" name="CustomName" label="&lt;color=#FFFFFF&gt;&lt;size=17&gt;Custom Name&lt;/color&gt;" />
+        <uie:ObjectField label="&lt;color=#FFFFFF&gt;&lt;size=17&gt;Custom Icon                   &lt;/color&gt;" binding-path="IconButton" type="UnityEngine.Texture2D, UnityEngine.CoreModule" name="icon" />
+    </ui:VisualElement>
+    <ui:VisualElement style="flex-grow: 1; transform-origin: center; translate: 0 0;">
+        <ui:Label tabindex="-1" text="&#10;" parse-escape-sequences="true" display-tooltip-when-elided="true" />
+        <uie:PropertyField binding-path="UseExistParameter" name="ToggleExistBooleanParameter" label="&lt;color=#FFC743&gt;&lt;size=13&gt;Use Exist Parameter&lt;/color&gt;" style="translate: 0 0;" />
+        <ui:VisualElement name="InputExistParameterElement" style="flex-grow: 1;">
+            <uie:PropertyField binding-path="ExistBooleanParameter" name="ExistBooleanParameter" label="&lt;color=#FFFFFF&gt;&lt;size=15&gt;Parameter&lt;/color&gt;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="GenerateElement" style="flex-grow: 1;">
+        <ui:VisualElement style="flex-grow: 1; translate: 0 20px; color: rgb(255, 255, 255);">
+            <ui:Toggle label="&lt;color=#FFFFFF&gt;Hide by Default" name="Default" binding-path="DefaultValue" style="color: rgb(255, 255, 255); -unity-text-align: upper-left;" />
+            <ui:Toggle label="&lt;color=#FFFFFF&gt;Saved" name="Saved" binding-path="SavedValue" style="color: rgb(255, 255, 255);" />
+            <ui:Toggle label="&lt;color=#FFFFFF&gt;Synced" name="Synced" binding-path="Synced" style="color: rgb(255, 255, 255);" />
+            <ui:Toggle label="&lt;color=#FFFFFF&gt;Local Only" name="LocalOnly" binding-path="LocalOnly" style="color: rgb(255, 255, 255);" />
+        </ui:VisualElement>
+        <ui:GroupBox style="height: 72px;">
+            <ui:Button text="&lt;color=#FFFFFF&gt;&#10;Open Lazy Namespace Group Icon Editor&#10;&lt;/color&gt;" parse-escape-sequences="true" display-tooltip-when-elided="true" name="GroupIconEditor" style="justify-content: flex-start; align-items: auto; translate: 0 20px;" />
+        </ui:GroupBox>
+        <ui:VisualElement style="flex-grow: 1;">
+            <ui:Label tabindex="-1" text="&#10;&lt;color=white&gt;Lazy Toggle Object MA v.1.0.3&#10;&lt;b&gt;&lt;color=#FF5733&gt;SweetForest.booth.pm" parse-escape-sequences="true" display-tooltip-when-elided="true" focusable="false" usage-hints="None" style="-unity-text-align: upper-center; -unity-text-outline-width: 0.1px; text-shadow: 0 0 0 rgba(0, 0, 0, 0); cursor: initial;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
