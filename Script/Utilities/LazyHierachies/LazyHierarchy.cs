@@ -20,13 +20,13 @@ namespace SweetForest.LazyToggleObjectMA.Utilities.LazyHierachies
 
        
         // Method to add a value to the hierarchy
-        public void Add(string path, T value)
+        public void Add(string path, T value,string nameT)
         {
 
             if (path == "") // add value into root
             {
 
-                Root.AddValue(value);
+                Root.AddValue(value,nameT);
                 // cachedNodes[""] = Root; no root is root is not inside root
                 return;
             }
@@ -58,7 +58,7 @@ namespace SweetForest.LazyToggleObjectMA.Utilities.LazyHierachies
                 currentNode = childNode; // Move to the child node
             }
 
-            currentNode.AddValue(value); // Add the value at the final node
+            currentNode.AddValue(value,nameT); // Add the value at the final node
             cachedNodes[path] = currentNode; // Cache the node
         }
 

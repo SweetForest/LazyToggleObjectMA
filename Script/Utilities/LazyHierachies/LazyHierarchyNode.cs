@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace SweetForest.LazyToggleObjectMA.Utilities.LazyHierachies
 {
@@ -8,6 +9,7 @@ namespace SweetForest.LazyToggleObjectMA.Utilities.LazyHierachies
         public string Namespace;
         public string NamespacePath;
         public List<T> Values; // Change from T Value to List<T> Values
+        private Dictionary<string,int> DuplicatedObjectName;
         private Dictionary<T,int> ValueIndexs;
         public Dictionary<string, LazyHierarchyNode<T>> Children;
 
@@ -18,14 +20,22 @@ namespace SweetForest.LazyToggleObjectMA.Utilities.LazyHierachies
             NamespacePath = namespacePath;
             Values = new List<T>(); // Initialize the list
             Children = new Dictionary<string, LazyHierarchyNode<T>>();
+            DuplicatedObjectName = new Dictionary<string, int>();
             ValueIndexs = new Dictionary<T, int>();
         }
 
         // Method to add a value to this node
-        public void AddValue(T value)
+        // T must be gameobject
+        public void AddValue(T value,string name)
         {
-            ValueIndexs.Add(value,Values.Count);
+       
+            if(DuplicatedObjectName.ContainsKey(name)) {
+                DuplicatedObjectName[name]++;
+            } else {
+                DuplicatedObjectName[name] = 0;
+            }
             Values.Add(value); // Add the value to the list
+            ValueIndexs.Add(value,DuplicatedObjectName[name]);
             
         }
         

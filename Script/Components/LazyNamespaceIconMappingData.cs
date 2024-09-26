@@ -105,6 +105,9 @@ namespace SweetForest.LazyToggleObjectMA.Components
                 mappings.Add(new NamespaceTextureMapping { namespacePath = kvp.Key, texture = kvp.Value });
             }
         }
+
+
+        private string unique_id;
     }
 
 }

@@ -76,7 +76,7 @@ namespace SweetForest.LazyToggleObjectMA.Editor
             var list = targetGameObject.GetComponentsInChildren<Components.LazyToggleObjectMAInstaller>().ToList();
             foreach (var item in list)
             {
-                lazyHierarchy.Add(item.NamespaceGroup, item);
+                lazyHierarchy.Add(item.NamespaceGroup, item,item.getNameButton());
             }
 
             var mappingData = targetGameObject.GetComponent<LazyNamespaceIconMappingData>();

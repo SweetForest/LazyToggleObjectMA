@@ -71,7 +71,7 @@ namespace SweetForest.LazyToggleObjectMA.Editor
                 var list = ctx.AvatarRootObject.GetComponentsInChildren<Components.LazyToggleObjectMAInstaller>().ToList();
                 foreach (var item in list)
                 {
-                    lazyHierarchy.Add(item.NamespaceGroup, item);
+                    lazyHierarchy.Add(item.NamespaceGroup, item,item.getNameButton());
                 }
                 Debug.Log("LazyToggleObjectMA: prepared Lazy Hierachy");
             }
